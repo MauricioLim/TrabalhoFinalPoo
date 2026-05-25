@@ -1,0 +1,19 @@
+package com.trabalho.trabalhoFinal;
+
+import java.time.LocalDate;
+
+public class Receita extends Financeiro{
+    public Receita(double valor, LocalDate data, Categoria categoria) {
+        super(valor, data, categoria);
+    }
+
+    @Override
+    public void setCategoria(Categoria categoria){
+        if (categoria.equals(Categoria.SALARIO) || categoria.equals(Categoria.DECIMO_TERCEIRO) || categoria.equals(Categoria.FERIAS) || categoria.equals(Categoria.OUTRAS_RECEITAS)){
+            super.setCategoria(categoria);
+        } else {
+            throw new IllegalArgumentException("Categoria inválida para receita.");
+        }
+    }
+
+}
