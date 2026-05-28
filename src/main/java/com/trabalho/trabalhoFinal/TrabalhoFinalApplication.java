@@ -3,13 +3,14 @@ package com.trabalho.trabalhoFinal;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 @SpringBootApplication
 public class TrabalhoFinalApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		Financeiro f = new Financeiro();
 		LocalDate data = LocalDate.of(2024, 6, 1);
@@ -20,6 +21,8 @@ public class TrabalhoFinalApplication {
 		f.adicionarFinanceiro(despesa);
 
 		System.out.println("Saldo total: " + f.saldoTotal());
+
+
 
 	}
 

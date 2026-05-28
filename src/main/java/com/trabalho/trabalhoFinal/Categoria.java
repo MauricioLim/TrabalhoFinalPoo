@@ -11,5 +11,5 @@ public enum Categoria {
     SAUDE,
     EDUCACAO,
     ENTRETERIMENTO,
-    OUTROAS_DESPESAS
+    OUTRAS_DESPESAS
 }

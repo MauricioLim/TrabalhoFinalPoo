@@ -1,9 +1,10 @@
 package com.trabalho.trabalhoFinal;
 
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 
 public class Receita extends Financeiro{
-    public Receita(double valor, LocalDate data, Categoria categoria) {
+    public Receita(double valor, LocalDate data, Categoria categoria) throws FileNotFoundException {
         super(valor, data, categoria);
     }
 
