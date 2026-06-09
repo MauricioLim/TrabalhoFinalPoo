@@ -25,31 +25,33 @@ public class Financeiro {
 
    public void adicionarArquivo(Financeiro financeiro) throws IOException {
 
-        File arquivo = new File("C:/Users/mdlima/Documents/programas/trabalhoFinal/despesas.csv");
+        File arquivo = new File("despesas.csv");
+        if (!arquivo.exists()){
+            arquivo.createNewFile();
+        }
 
         if (financeiro == null) {
             throw new IllegalArgumentException("Financeiro não pode ser nulo.");
         }
 
        FileOutputStream fop = new FileOutputStream(arquivo, true);
+       BufferedWriter buf = new BufferedWriter(new OutputStreamWriter(fop, "UTF-8"));
        DataOutputStream dop = new DataOutputStream(fop);
-
         try {
-
-            arquivo.createNewFile();
-
             if (!arquivo.exists() || arquivo.length() == 0) {
-                dop.writeUTF("Valor;Data;Categoria");
-                dop.writeUTF("\n");
+                buf.write("Valor;Data;Categoria");
+                buf.write("\n");
             }
 
-            String texto = String.valueOf(financeiro.getValor()) + ";" + financeiro.data.toString() + ";" + financeiro.getCategoria().toString() + "\n";
-            dop.writeUTF(texto);
+            //String texto = String.valueOf(financeiro.getValor()) + ";" + financeiro.data.toString() + ";" + financeiro.getCategoria().toString() + "\n";
+            //dop.writeUTF(texto);
+            buf.write(String.valueOf(financeiro.getValor()) + ";" + financeiro.data.toString() + ";" + financeiro.getCategoria().toString());
+            buf.write("\n");
 
         } catch (IOException e) {
             throw new IOException("Erro ao escrever no arquivo: " + e.getMessage());
         } finally {
-            dop.close();
+            buf.close();
         }
    }
 
@@ -82,12 +84,12 @@ public class Financeiro {
             throw new IllegalArgumentException("Financeiro não pode ser nulo.");
         }
 
+        this.financeiros.add(financeiro);
         adicionarArquivo(financeiro);
     }
 
-    public ArrayList<Financeiro> lerArquivo(){
-        ArrayList<Financeiro> lista = new ArrayList<>();
 
+    public void lerArquivo(){
         File arquivo = new File("C:/Users/mdlima/Documents/programas/trabalhoFinal/despesas.csv");
         String separador = ";";
 
@@ -98,22 +100,25 @@ public class Financeiro {
 
             String linha;
 
-            // Lê o cabeçalho e ignora (se houver)
             String cabecalho = br.readLine();
 
-            // Loop para ler o restante das linhas
             while ((linha = br.readLine()) != null) {
-                // Divide a linha em colunas usando o separador
+
                 String[] colunas = linha.split(separador);
 
-                // Verifica se a linha possui o número correto de colunas para evitar erros
+
                 if (colunas.length >= 3) {
                     String coluna1 = colunas[0].trim();
                     String coluna2 = colunas[1].trim();
                     String coluna3 = colunas[2].trim();
 
-                    Financeiro f = new Financeiro(Double.parseDouble(coluna1), LocalDate.parse(coluna2), Categoria.valueOf(coluna3));
-                    lista.add(f);
+                    if (coluna3.equals("SALARIO") || coluna3.equals("DECIMO_TERCEIRO") || coluna3.equals("FERIAS") || coluna3.equals("OUTRAS_RECEITAS")){
+                        Receita f = new Receita(Double.parseDouble(coluna1), LocalDate.parse(coluna2), Categoria.valueOf(coluna3));
+                        this.financeiros.add(f);
+                    } else {
+                        Despesa f = new Despesa(Double.parseDouble(coluna1), LocalDate.parse(coluna2), Categoria.valueOf(coluna3));
+                        this.financeiros.add(f);
+                    }
                 }
             }
 
@@ -121,8 +126,6 @@ public class Financeiro {
             e.printStackTrace();
         }
 
-
-        return lista;
     }
 
 
@@ -143,7 +146,6 @@ public class Financeiro {
 
     public double saldoData(LocalDate data){
         double total = 0;
-        ArrayList<Financeiro> lista = lerArquivo();
         for (Financeiro f: this.financeiros){
             if (f.getData().isAfter(data)){
                 return total;
@@ -159,9 +161,7 @@ public class Financeiro {
     }
 
     public ArrayList<Financeiro> listarData(){
-        ArrayList<Financeiro> lista = lerArquivo();
-        lista.stream().sorted(Comparator.comparing(Financeiro::getData));
-
+        ArrayList<Financeiro> lista = (ArrayList<Financeiro>) this.financeiros.stream().sorted(Comparator.comparing(Financeiro::getData)).toList();
         return lista;
     }
 
