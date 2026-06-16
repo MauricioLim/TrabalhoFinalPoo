@@ -12,7 +12,7 @@ public class TrabalhoFinalApplication {
 
 	public static void main(String[] args) throws IOException {
 
-		Financeiro f = new Financeiro();
+		//Financeiro f = new Financeiro();
 		//LocalDate data = LocalDate.of(2024, 6, 1);
 		//Receita salario = new Receita(5000, data, Categoria.SALARIO);
 		//f.adicionarFinanceiro(salario);
@@ -22,8 +22,8 @@ public class TrabalhoFinalApplication {
 
 		//System.out.println("Saldo total: " + f.saldoTotal());
 
-		f.lerArquivo();
-		System.out.println(f.saldoTotal());
+		//f.lerArquivo();
+		//System.out.println(f.saldoTotal());
 	}
 
 }

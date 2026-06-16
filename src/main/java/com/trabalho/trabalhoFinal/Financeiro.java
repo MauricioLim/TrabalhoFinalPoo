@@ -13,10 +13,6 @@ public class Financeiro {
     private ArrayList<Financeiro> financeiros = new ArrayList<>();
 
 
-    public Financeiro() throws FileNotFoundException {
-
-    }
-
     public Financeiro(double valor, LocalDate data, Categoria categoria) throws FileNotFoundException {
         setValor(valor);
         setData(data);
@@ -60,6 +56,9 @@ public class Financeiro {
     }
 
     public void setValor(double valor) {
+    	if (valor < 0) {
+    		throw new IllegalArgumentException("Valor inváido");
+    	}
         this.valor = valor;
     }
 
@@ -68,6 +67,9 @@ public class Financeiro {
     }
 
     public void setData(LocalDate data) {
+    	if (data == null) {
+    		throw new IllegalArgumentException("Data inválida");
+    	}
         this.data = data;
     }
 
@@ -76,6 +78,9 @@ public class Financeiro {
     }
 
     public void setCategoria(Categoria categoria) {
+    	if (categoria == null) {
+    		throw new IllegalArgumentException("Categoria inválida");
+    	}
         this.categoria = categoria;
     }
 
@@ -127,8 +132,6 @@ public class Financeiro {
         }
 
     }
-
-
 
     public double saldoTotal(){
         double total = 0;
