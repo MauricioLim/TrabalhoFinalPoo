@@ -72,6 +72,7 @@ public class Financeiro {
     	}
         this.data = data;
     }
+    
 
     public Categoria getCategoria() {
         return categoria;
@@ -84,6 +85,28 @@ public class Financeiro {
         this.categoria = categoria;
     }
 
+    public ArrayList<Financeiro> getReceitas(){
+    	ArrayList<Financeiro> receitas = new ArrayList();
+    	for(Financeiro f: this.financeiros) {
+    		if (f instanceof Receita) {
+    			receitas.add(f);
+    		}
+    	}
+    	
+    	return receitas;
+    }
+    
+    public ArrayList<Financeiro> getDespesas(){
+    	ArrayList<Financeiro> despesas = new ArrayList();
+    	
+    	for(Financeiro f: this.financeiros) {
+    		if (f instanceof Despesa) {
+    			despesas.add(f);
+    		}
+    	}
+    	return despesas;
+    }
+    
     public void adicionarFinanceiro(Financeiro financeiro) throws IOException {
         if (financeiro == null) {
             throw new IllegalArgumentException("Financeiro não pode ser nulo.");
@@ -95,7 +118,7 @@ public class Financeiro {
 
 
     public void lerArquivo(){
-        File arquivo = new File("C:/Users/mdlima/Documents/programas/trabalhoFinal/despesas.csv");
+        File arquivo = new File("despesas.csv");
         String separador = ";";
 
         try (FileInputStream fis = new FileInputStream(arquivo);
@@ -148,8 +171,11 @@ public class Financeiro {
     }
 
     public double saldoData(LocalDate data){
+    	ArrayList<Financeiro> ordenada = new ArrayList();
+    	ordenada = listarData();
+    	
         double total = 0;
-        for (Financeiro f: this.financeiros){
+        for (Financeiro f: ordenada){
             if (f.getData().isAfter(data)){
                 return total;
             } else{
@@ -164,7 +190,8 @@ public class Financeiro {
     }
 
     public ArrayList<Financeiro> listarData(){
-        ArrayList<Financeiro> lista = (ArrayList<Financeiro>) this.financeiros.stream().sorted(Comparator.comparing(Financeiro::getData)).toList();
+    	ArrayList<Financeiro> lista = new ArrayList<>(this.financeiros);
+    	lista.sort(Comparator.comparing(Financeiro::getData));
         return lista;
     }
 
