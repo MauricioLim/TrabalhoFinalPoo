@@ -1,19 +1,43 @@
 package com.trabalho.trabalhoFinal;
 
-import java.io.FileNotFoundException;
 import java.time.LocalDate;
 
-public class Despesa extends Lancamento{
-    public Despesa(double valor, LocalDate data, Categoria categoria) throws FileNotFoundException {
+/**
+ * Representa uma despesa financeira doméstica.
+ * Herda de {@link Lancamento} e valida que a categoria pertence ao grupo de despesas:
+ * ALIMENTACAO, TRANSPORTE, RESIDENCIA, SAUDE, EDUCACAO, ENTRETENIMENTO ou OUTRAS_DESPESAS.
+ */
+public class Despesa extends Lancamento {
+
+    /**
+     * Construtor de uma despesa financeira.
+     *
+     * @param valor     Valor da despesa. Deve ser maior ou igual a zero.
+     * @param data      Data da despesa. Não pode ser nula.
+     * @param categoria Categoria da despesa. Deve ser uma categoria válida de despesa.
+     */
+    public Despesa(double valor, LocalDate data, Categoria categoria) {
         super(valor, data, categoria);
     }
 
+    /**
+     * Define a categoria da despesa, validando se pertence ao grupo de despesas.
+     *
+     * @param categoria Categoria a ser definida.
+     * @throws IllegalArgumentException se a categoria não for válida para despesa.
+     */
     @Override
-    public void setCategoria(Categoria categoria){
-        if (categoria.equals(Categoria.ALIMENTACAO) || categoria.equals(Categoria.TRANSPORTE) || categoria.equals(Categoria.RESIDENCIA) || categoria.equals(Categoria.SAUDE) || categoria.equals(Categoria.EDUCACAO) || categoria.equals(Categoria.ENTRETERIMENTO) || categoria.equals(Categoria.OUTRAS_DESPESAS)){
+    public void setCategoria(Categoria categoria) {
+        if (categoria == Categoria.ALIMENTACAO
+                || categoria == Categoria.TRANSPORTE
+                || categoria == Categoria.RESIDENCIA
+                || categoria == Categoria.SAUDE
+                || categoria == Categoria.EDUCACAO
+                || categoria == Categoria.ENTRETENIMENTO
+                || categoria == Categoria.OUTRAS_DESPESAS) {
             super.setCategoria(categoria);
         } else {
-            throw new IllegalArgumentException("Categoria inválida para despesa.");
+            throw new IllegalArgumentException("Categoria inválida para despesa: " + categoria);
         }
     }
 }
