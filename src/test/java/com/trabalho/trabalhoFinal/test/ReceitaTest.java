@@ -8,16 +8,8 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Testes unitários da classe {@link Receita}.
- * Valida a criação de receitas com dados válidos e o comportamento
- * esperado ao fornecer dados inválidos.
- */
 public class ReceitaTest {
 
-    // -------------------------------------------------------------------------
-    // Criação com dados válidos
-    // -------------------------------------------------------------------------
 
     @Test
     public void deveCriarReceitaComSalario() {

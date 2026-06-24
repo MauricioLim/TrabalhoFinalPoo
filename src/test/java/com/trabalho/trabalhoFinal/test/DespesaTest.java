@@ -8,11 +8,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Testes unitários da classe {@link Despesa}.
- * Valida a criação de despesas com dados válidos e o comportamento
- * esperado ao fornecer dados inválidos.
- */
+
 public class DespesaTest {
 
 

@@ -19,7 +19,7 @@ public class Financeiro {
 
 
     /**
-     * @param lancamento Lançamento a ser adicionado. Não pode ser nulo.
+     * @param lancamento Lançamento a ser adicionado não pode ser nulo.
      * @throws IllegalArgumentException se o lançamento for nulo.
      * @throws IOException              se ocorrer erro ao gravar no arquivo.
      */
@@ -31,9 +31,7 @@ public class Financeiro {
         gravarNoArquivo(lancamento);
     }
 
-
     /**
-     *
      * @return saldo total (receitas menos despesas).
      */
     public double saldoTotal() {
@@ -66,9 +64,8 @@ public class Financeiro {
         return total;
     }
 
-
     /**
-     * @return lista contendo apenas os lançamentos do tipo {@link Receita}.
+     * @return lista contendo apenas os lançamentos do tipo receita
      */
     public ArrayList<Lancamento> getReceitas() {
         ArrayList<Lancamento> receitas = new ArrayList<>();
@@ -82,7 +79,7 @@ public class Financeiro {
 
     /**
      *
-     * @return lista contendo apenas os lançamentos do tipo {@link Despesa}.
+     * @return lista contendo apenas os lançamentos do tipo despesa
      */
     public ArrayList<Lancamento> getDespesas() {
         ArrayList<Lancamento> despesas = new ArrayList<>();
@@ -96,7 +93,7 @@ public class Financeiro {
 
     /**
      *
-     * @return lista de lançamentos ordenados cronologicamente.
+     * @return lista de lançamentos ordenados
      */
     public ArrayList<Lancamento> listarOrdenadoPorData() {
         ArrayList<Lancamento> ordenados = new ArrayList<>(lancamentos);
@@ -123,14 +120,9 @@ public class Financeiro {
                 tipo = "DESPESA";
             }
 
-            String linha = String.format("Data: %s | Tipo: %s | Categoria: %s | Valor: R$ %.2f | Saldo: R$ %.2f", l.getData(),
-                tipo,
-                l.getCategoria(),
-                l.getValor(),
-                saldoAcumulado);
+            String linha = String.format("Data: %s | Tipo: %s | Categoria: %s | Valor: R$ %.2f | Saldo: R$ %.2f", l.getData(), tipo, l.getCategoria(), l.getValor(), saldoAcumulado);
             extrato.add(linha);
         }
-
         return extrato;
     }
 
@@ -141,10 +133,9 @@ public class Financeiro {
         return lancamentos;
     }
 
-
     /**
-     * @param lancamento Lançamento a ser gravado.
-     * @throws IOException se ocorrer erro ao escrever no arquivo.
+     * @param lancamento Lançamento a ser gravado
+     * @throws IOException se ocorrer erro ao escrever no arquivo
      */
     private void gravarNoArquivo(Lancamento lancamento) throws IOException {
         File arquivo = new File(NOME_ARQUIVO);
@@ -169,9 +160,8 @@ public class Financeiro {
     }
 
     /**
-     * Lê os lançamentos do arquivo CSV e os carrega na lista em memória.
-     * Identifica receitas e despesas pela categoria lida.
-     * Chamado automaticamente no construtor.
+     * Lê os lançamentos do arquivo CSV
+     * Identifica receitas e despesas pela categoria lida
      */
     public void lerArquivo() {
         File arquivo = new File(NOME_ARQUIVO);

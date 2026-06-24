@@ -24,10 +24,6 @@ public class FinanceiroTest {
     private static final String ARQUIVO_CSV = "despesas.csv";
     private Financeiro financeiro;
 
-    /**
-     * Remove o arquivo CSV antes de cada teste para garantir
-     * que cada caso comece com estado limpo.
-     */
     @BeforeEach
     public void setUp() {
         File arquivo = new File(ARQUIVO_CSV);
@@ -37,9 +33,6 @@ public class FinanceiroTest {
         financeiro = new Financeiro();
     }
 
-    /**
-     * Remove o arquivo CSV após cada teste para não poluir os demais.
-     */
     @AfterEach
     public void tearDown() {
         File arquivo = new File(ARQUIVO_CSV);
@@ -71,12 +64,11 @@ public class FinanceiroTest {
     }
 
     @Test
-    public void deveLancarExcecaoAoAdicionarLancamentoNulo() {
+    public void deveLancarExcecaoAoAdicionarLancamentoNulo() throws IOException {
         assertThrows(IllegalArgumentException.class, () ->
-            financeiro.adicionarLancamento(null)
+                financeiro.adicionarLancamento(null)
         );
-
-
+    }
 
     @Test
     public void deveCalcularSaldoTotalMistoPositivo() throws IOException {
@@ -85,7 +77,6 @@ public class FinanceiroTest {
         financeiro.adicionarLancamento(new Despesa(300.0, LocalDate.of(2025, 1, 15), Categoria.ALIMENTACAO));
         assertEquals(3700.0, financeiro.saldoTotal());
     }
-
 
     @Test
     public void deveConsiderarLancamentosNaDataExata() throws IOException {
@@ -111,8 +102,6 @@ public class FinanceiroTest {
         assertEquals(4800.0, financeiro.saldoAteData(LocalDate.of(2025, 1, 31)));
     }
 
-
-
     @Test
     public void deveRetornarApenasReceitas() throws IOException {
         financeiro.adicionarLancamento(new Receita(3000.0, LocalDate.of(2025, 1, 1), Categoria.SALARIO));
@@ -135,7 +124,6 @@ public class FinanceiroTest {
         assertTrue(despesas.stream().allMatch(l -> l instanceof Despesa));
     }
 
-
     @Test
     public void deveOrdenarLancamentosPorDataCrescente() throws IOException {
         financeiro.adicionarLancamento(new Despesa(100.0, LocalDate.of(2025, 3, 1), Categoria.ALIMENTACAO));
@@ -148,9 +136,6 @@ public class FinanceiroTest {
         assertEquals(LocalDate.of(2025, 2, 1), ordenados.get(1).getData());
         assertEquals(LocalDate.of(2025, 3, 1), ordenados.get(2).getData());
     }
-
-
-
 
     @Test
     public void deveGerarExtratoOrdenadoPorData() throws IOException {
@@ -186,8 +171,4 @@ public class FinanceiroTest {
         Financeiro novoFinanceiro = new Financeiro(); // lerArquivo() chamado no construtor
         assertEquals(2, novoFinanceiro.getLancamentos().size());
     }
-
-
-    }
-
 }

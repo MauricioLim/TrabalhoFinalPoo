@@ -18,6 +18,6 @@ public enum Categoria {
     RESIDENCIA,
     SAUDE,
     EDUCACAO,
-    ENTRETENIMENTO,   // corrigido: era ENTRETERIMENTO
+    ENTRETENIMENTO,
     OUTRAS_DESPESAS
 }
